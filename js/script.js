@@ -1,5 +1,33 @@
+var token;
+
+//helper to delect cookie in browese : change the expiry time to the past
+function delectCookie(name){
+    document.cookie = name + "=;expires = Thu, 01an 1970 00:00:01 GMT"
+}
+
+
+//fuction paste from online http://stackoverflow.com/questions/10730362/get-cookie-by-name
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function updateNavView(){
+    if(token){
+        $("#loginNav").hide();
+        $("#logoutNav").show();
+    }else{
+        $("#loginNav").show();
+        $("#logoutNav").hide();
+    }
+}
+
 $(document).ready(function() {
-    //console.log(" Hello, script is ready!");
+
+    token = getCookie("x-access-token");
+    
+    updateNavView();
 
     $("#signupBtn").click(function(event) {
         //alert("Don't click sign up button!! ");
@@ -59,6 +87,12 @@ $(document).ready(function() {
         }
     });
 
+$("#logoutNav").click(function(event) {
+    event.preventDefault();
+    delectCookie('x-access-token');
+    window.location.href = "index.html";
+
+});
 
 
 });
