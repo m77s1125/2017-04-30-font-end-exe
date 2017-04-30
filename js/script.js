@@ -1,23 +1,23 @@
 var token;
 
 //helper to delect cookie in browese : change the expiry time to the past
-function delectCookie(name){
+function delectCookie(name) {
     document.cookie = name + "=;expires = Thu, 01an 1970 00:00:01 GMT"
 }
 
 
 //fuction paste from online http://stackoverflow.com/questions/10730362/get-cookie-by-name
 function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-function updateNavView(){
-    if(token){
+function updateNavView() {
+    if (token) {
         $("#loginNav").hide();
         $("#logoutNav").show();
-    }else{
+    } else {
         $("#loginNav").show();
         $("#logoutNav").hide();
     }
@@ -26,7 +26,7 @@ function updateNavView(){
 $(document).ready(function() {
 
     token = getCookie("x-access-token");
-    
+
     updateNavView();
 
     $("#signupBtn").click(function(event) {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
         if (username && password) {
             //AJAX
-            $.post("http://open-commerce.herokuapp.com/api/signup", {
+            $.post("https://open-commerce.herokuapp.com/api/signup", {
                     username: username,
                     password: password
                 },
@@ -58,7 +58,6 @@ $(document).ready(function() {
         }
     });
 
-
     $("#loginBtn").click(function(event) {
 
         event.preventDefault();
@@ -68,7 +67,7 @@ $(document).ready(function() {
         console.log(username + " " + password);
 
         if (username && password) {
-            $.post("http://open-commerce.herokuapp.com/api/login", {
+            $.post("https://open-commerce.herokuapp.com/api/login", {
                     username: username,
                     password: password
                 },
@@ -76,7 +75,7 @@ $(document).ready(function() {
                     if (response.success) {
                         var cookie = "x-access-token=" + response.token;
                         document.cookie = cookie;
-                        window.location.href = "/index.html";
+                        window.location.href = "/2017-04-30-font-end-exe/index.html";
                     } else {
                         alert(response.message);
                     }
@@ -87,12 +86,12 @@ $(document).ready(function() {
         }
     });
 
-$("#logoutNav").click(function(event) {
-    event.preventDefault();
-    delectCookie('x-access-token');
-    window.location.href = "index.html";
+    $("#logoutNav").click(function(event) {
+        event.preventDefault();
+        delectCookie('x-access-token');
+        window.location.href = "/2017-04-30-font-end-exe/index.html";
 
-});
+    });
 
 
 });
